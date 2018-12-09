@@ -278,7 +278,7 @@ var animationSetup = false;
    // Initialize the functionality of the controller
    self._initilize();
 
- } // End animationPipeline
+
 
  // Used to call animation between questions
  var interval = setInterval(function() {

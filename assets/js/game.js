@@ -223,7 +223,6 @@ var animationSetup = false;
           self.runEndOfGame();
         }
       }
-    }  
     var fading = window.setInterval(func, interval);
    };
 

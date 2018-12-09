@@ -1,9 +1,14 @@
 var animationSetup = false;
 
- function animationPipeline() {
+ function animationPlease() {
    
    /* Variables */
    var self = this,
+   buttonOne = document.getElementById('buttonOne'),
+   buttonTwo = document.getElementById('buttonTwo'),
+   buttonThree = document.getElementById('buttonThree'),
+   buttonFour = document.getElementById('buttonFour'),
+   buttonArray = [buttonOne, buttonTwo, buttonThree, buttonFour],
    w = window.innerWidth,
    h = window.innerHeight,
    stage = document.getElementById('stage'),
@@ -16,11 +21,8 @@ var animationSetup = false;
    timerSpan = timer[0].getElementsByTagName('span'),
    gameChoices = document.getElementById('gameChoices'),
    gameHeader = document.getElementById('gameHeader'),
-   buttonOne = document.getElementById('buttonOne'),
-   buttonTwo = document.getElementById('buttonTwo'),
-   buttonThree = document.getElementById('buttonThree'),
-   buttonFour = document.getElementById('buttonFour'),
-   buttonArray = [buttonOne, buttonTwo, buttonThree, buttonFour],
+  
+  
    modal_window = document.getElementById('modal_window')
    startAnimation = new TimelineMax({repeat:0}),
    gameIndex = 0,
@@ -29,9 +31,6 @@ var animationSetup = false;
    runningGameAgain = false,
    timerObject = undefined,
    gameQuestions = [],
-   gameMusic = new Audio('http://f5361a5c08a4c03f7c6f-acbeb9602bd0a56bf9c1a6bed3d8280b.r27.cf2.rackcdn.com/math2.mp3'),
-   rightAnswer = new Audio('http://f5361a5c08a4c03f7c6f-acbeb9602bd0a56bf9c1a6bed3d8280b.r27.cf2.rackcdn.com/RightSound2%202.mp3'),
-   wrongAnser = new Audio('http://f5361a5c08a4c03f7c6f-acbeb9602bd0a56bf9c1a6bed3d8280b.r27.cf2.rackcdn.com/wrongSound2.mp3'),
    questions = [
     'When was the first commercial arcade video game released?',
     'What was the name of the first successful commercial video game?',
@@ -156,7 +155,6 @@ var animationSetup = false;
 
    /**
     * Determines if an answer is correct or incorrect
-    * Displays a message to user and plays sound effect
     **/
    self.anwerClicked = function(e) {
 
@@ -214,51 +212,6 @@ var animationSetup = false;
     self.fade_in(time, modal_window, true);
    };
 
-  /**
-   * Credit for the idea about fade_in and fade_out to Todd Motto
-   * fade_in function emulates the fadeIn() jQuery function
-   */
-   self.fade_in = function(time, elem, flag) {
-
-    var opacity = 0, interval = 50, 
-    gap = interval / time, self = this;
-      
-    elem.style.display = 'block';
-    elem.style.opacity = opacity;
-    
-    function func() { 
-      opacity += gap;
-      elem.style.opacity = opacity;
-      
-      if (opacity >= 1) {
-        window.clearInterval(fading);
-        //now detect if we need to call fade out
-        if (flag) {
-          setTimeout(function(){
-             self.fade_out(time, elem);
-          }, 1500);
-        }
-      }
-    }
-    var fading = window.setInterval(func, interval);
-   },
-
-  /**
-   *  
-   * Credit for the idea about fade_in and fade_out to Todd Motto
-   * fade_out function emulates the fadeOut() jQuery function
-   */
-   self.fade_out = function(time, elem) {
-    var opacity = 1, interval = 50, gap = interval / time;
-        
-    function func() { 
-      opacity -= gap;
-      elem.style.opacity = opacity;
-      
-      if (opacity <= 0) {
-        window.clearInterval(fading); 
-        elem.style.display = 'none';
-        gameIndex++;
         // Determine if we need to run another game loop
         if (gameIndex != gameQuestions.length) {
           timerIndex = 8;
@@ -274,15 +227,15 @@ var animationSetup = false;
     var fading = window.setInterval(func, interval);
    };
 
+
    /**
     * Runs when the game ends
-    * Displays a modal window with the option to tweet score or play again
+    * Displays a modal window with the option to play again
     **/
    self.runEndOfGame = function() {
   
     window_width = window.innerWidth|| document.documentElement.clientWidth
                    || document.body.clientWidth;
-    var tweetButton = '<button id="tweekScore" class="left twitter" onClick="self.tweetScore()">TWEET SCORE</button>';
     var playAgainButton = '<button id="playAgain" class="left" onClick="self.resetGame()">PLAY AGAIN</button>';
     var actualScoreHeader = '<h2>CONGRATS, YOUR FINAL SCORE IS: '+ actualScore + '</h2>';
     var insertedHTML = actualScoreHeader +'<div>' + tweetButton + playAgainButton + '</div>';
@@ -292,17 +245,6 @@ var animationSetup = false;
     self.fade_in(1000, modal_window, false);
    };
 
-   /**
-    * The tweets score function allows a user to post their score to twitter
-    **/
-   self.tweetScore = function() {
-    var u = 'https://codepen.io/agnosticdev/pen/ZbWjaB';
-    var text = 'I just played Web Trivia Game on @CodePen and scored: ' + actualScore + ' points! @matt_815';
-    var url = 'https://twitter.com/intent/tweet?original_referer=' + u + '&url=' + u + '&text=' + text;
-    var newWindow = window.open(url, 'name','height=400,width=450');
-    if (window.focus) {newWindow.focus()}
-    return false;
-   }
    /**
     * This function resets the game and starts it all over again
     * This function acts as to reset all data from scratch
@@ -333,26 +275,21 @@ var animationSetup = false;
 
    };
 
-   /**
-    * Logging Function
-    **/
-   self.l = function(message) {
-    console.log(message);
-   };
+ 
 
    // Initialize the functionality of the controller
    self._initilize();
 
  } // End animationPipeline
 
- // Used to call the animationPipline function
+ // Used to call animation between questions
  var interval = setInterval(function() {
   if(document.readyState === 'complete') {
     clearInterval(interval);
-    var pipe = animationPipeline();
+    var pipe = animationPlease();
 
     window.onresize = function(event) {
-      var pipe = animationPipeline()
+      var pipe = animationPlease()
     };
   }
  }, 100);

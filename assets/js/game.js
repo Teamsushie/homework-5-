@@ -274,12 +274,6 @@ var animationSetup = false;
    };
 
  
-
-   // Initialize the functionality of the controller
-   self._initilize();
-
-
-
  // Used to call animation between questions
  var interval = setInterval(function() {
   if(document.readyState === 'complete') {
